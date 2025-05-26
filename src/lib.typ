@@ -27,7 +27,8 @@
   authors: (),
   keywords: (),
   // The result of a call to the `bibliography` function or `none`.
-  bibliography: none,
+  bibliography: none, 
+  page_config: (:),
   body,
 ) = {
   //// CONSTANTS
@@ -80,6 +81,8 @@
       }
     },
   )
+  // apply custom page configs
+  set page(..page_config)
 
   //// HEADING CONFIGS
   set heading(numbering: "1.1")

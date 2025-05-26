@@ -36,7 +36,9 @@
     15--250 words.
   ],
   keywords: ("First keyword", "Second keyword", "Another keyword"),
-  bibliography: bibliography("refs.bib")
+  bibliography: bibliography("refs.bib"),
+  // optional configuration of page (takes all page parameter)
+  // page_config: (paper: "a4")
 )
 
 = First Section
