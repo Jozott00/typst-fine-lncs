@@ -217,7 +217,9 @@
       #set align(left)
       #set par(justify: true)
       #set text(size: 9pt)
-      *Abstract.* #abstract
+      #if abstract != [] [
+        *Abstract.* #abstract
+      ]
       #if keywords.len() > 0 {
         v(4.5mm)
         let display = if type(keywords) == str { keywords } else { keywords.join([ $dot$ ]) }
