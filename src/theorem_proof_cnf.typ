@@ -7,17 +7,25 @@
   thm-type,
   name,
   number,
-  body
+  body,
 ) = block(width: 100%, breakable: true)[#{
   set align(left)
-  strong(thm-type) + " "
-  if number != none {
-    [*#number.* ]
+  let (title-style, body-style) = if str(thm-type) == "Example" {
+    (title-style: emph, body-style: it => it)
+  } else {
+    (title-style: strong, body-style: emph)
   }
-  if name != none {
-    emph[(#name)] + " "
-  }
-  emph(body)
+  title-style({
+    thm-type + " "
+    if number != none {
+      number
+    }
+    if name != none {
+      [ (#name)]
+    }
+    [. ]
+  })
+  body-style(body)
   v(5pt)
 }]
 
@@ -25,7 +33,7 @@
   thm-type,
   name,
   number,
-  body
+  body,
 ) = block(width: 100%, breakable: true)[#{
   set align(left)
   emph(thm-type) + ". "
@@ -33,13 +41,14 @@
   v(5pt)
 }]
 
+#let __llncs-thm-numbering(fig) = {
+  if fig.numbering != none {
+    numbering(fig.numbering, ..fig.counter.at(fig.location()))
+  }
+}
 
 #let __llncs-thm-styling = (
-  thm-numbering: (fig) => {
-    if fig.numbering != none {
-      numbering(fig.numbering, ..fig.counter.at(fig.location()))
-    }  
-  },
+  thm-numbering: __llncs-thm-numbering,
   thm-styling: __llncs_thm_style,
   proof-styling: __llncs_thm_proof_style,
 )
@@ -47,20 +56,44 @@
 
 #let __llncs_thm_cnf() = {
   let thm = default-theorems(
-  "llcns-thm-group", lang: "en", ..__llncs-thm-styling)
+    "llcns-thm-group",
+    lang: "en",
+    ..__llncs-thm-styling,
+  )
   let def = default-theorems(
-    "llcns-def-group", lang: "en", ..__llncs-thm-styling)
+    "llcns-def-group",
+    lang: "en",
+    ..__llncs-thm-styling,
+  )
   let prop = default-theorems(
-    "llcns-prop-group", lang: "en", ..__llncs-thm-styling)
+    "llcns-prop-group",
+    lang: "en",
+    ..__llncs-thm-styling,
+  )
   let lem = default-theorems(
-    "llcns-lemma-group", lang: "en", ..__llncs-thm-styling)
+    "llcns-lemma-group",
+    lang: "en",
+    ..__llncs-thm-styling,
+  )
   let proof = default-theorems(
-    "llcns-proof-group", lang: "en", ..__llncs-thm-styling)
-  let coral = default-theorems(
-    "llcns-coral-group", lang: "en", ..__llncs-thm-styling)
+    "llcns-proof-group",
+    lang: "en",
+    ..__llncs-thm-styling,
+  )
+  let corol = default-theorems(
+    "llcns-corol-group",
+    lang: "en",
+    ..__llncs-thm-styling,
+  )
+  let example = new-theorems(
+    "llcns-example-group",
+    ("example": "Example"),
+    thm-numbering: __llncs-thm-numbering,
+    thm-styling: __llncs_thm_style,
+  )
 
   return (
-    theorem: thm.theorem, 
+    theorem: thm.theorem,
     __thm-rules: thm.rules,
     definition: def.definition,
     __def-rules: def.rules,
@@ -70,7 +103,9 @@
     __lem-rules: lem.rules,
     proof: proof.proof,
     __proof-rules: proof.rules,
-    corollary: coral.corollary,
-    __corol-rules: coral.rules,
+    corollary: corol.corollary,
+    __corol-rules: corol.rules,
+    example: example.example,
+    __example-rules: example.rules,
   )
 }

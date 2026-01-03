@@ -14,6 +14,8 @@
   __proof-rules,
   corollary,
   __corol-rules,
+  example,
+  __example-rules,
 ) = __llncs_thm_cnf()
 
 
@@ -27,7 +29,7 @@
   authors: (),
   keywords: (),
   // The result of a call to the `bibliography` function or `none`.
-  bibliography: none, 
+  bibliography: none,
   page-config: (:),
   body,
 ) = {
@@ -86,7 +88,9 @@
 
   //// HEADING CONFIGS
   set heading(numbering: "1.1")
-  show heading: it => if it.numbering == none { it } else { block(counter(heading).display(it.numbering) + h(4.5mm) + it.body) }
+  show heading: it => if it.numbering == none { it } else {
+    block(counter(heading).display(it.numbering) + h(4.5mm) + it.body)
+  }
   // padding
   show heading.where(level: 1): pad.with(bottom: 0.45em, top: 0.64em)
   show heading.where(level: 2): pad.with(bottom: 0.7em)
@@ -188,7 +192,8 @@
 
     v(3.6mm)
 
-    { // Institute information.
+    {
+      // Institute information.
       set text(9pt)
 
       insts
@@ -242,6 +247,7 @@
   show: __lem-rules
   show: __proof-rules
   show: __corol-rules
+  show: __example-rules
 
   // show actual body
   body
