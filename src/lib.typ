@@ -25,7 +25,7 @@
 #let lncs(
   title: [Contribution Title],
   // Opt.: Set this, if the title is too long to avoid linebreaks in the header of odd pages
-  running_title: none,
+  running-title: none,
   thanks: none,
   abstract: [],
   authors: (),
@@ -72,8 +72,8 @@
 
       if (calc.rem(pagenumer, 2) == 1) {
         align(right)[
-          #if running_title != none [
-            #running_title
+          #if running-title != none [
+            #running-title
           ] else [
             #title
           ]
