@@ -24,6 +24,8 @@
 // Go ahead and customize it to your liking!
 #let lncs(
   title: [Contribution Title],
+  // Opt.: If title is longer than 60 characters
+  running_title: [Running Title],
   thanks: none,
   abstract: [],
   authors: (),
@@ -70,7 +72,11 @@
 
       if (calc.rem(pagenumer, 2) == 1) {
         align(right)[
-          #title
+          #if title.len() > 60 [
+            #running_title
+          ] else [
+            #title
+          ]
           #h(1cm)
           #counter(page).display()
         ]

@@ -16,6 +16,8 @@
 
 #show: lncs.with(
   title: "Contribution Title",
+  // Opt.: If title is longer than 60 characters
+  // running_title: "Running title"
   thanks: "Supported by organization x.",
   authors: (
     author("First Author", 
