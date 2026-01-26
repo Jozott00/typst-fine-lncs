@@ -16,6 +16,8 @@
 
 #show: lncs.with(
   title: "Contribution Title",
+  // Opt.: Set this, if the title is too long to avoid linebreaks in the header of odd pages
+  // running_title: "Short version of contribution title"
   thanks: "Supported by organization x.",
   authors: (
     author("First Author", 

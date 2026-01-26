@@ -24,6 +24,8 @@
 // Go ahead and customize it to your liking!
 #let lncs(
   title: [Contribution Title],
+  // Opt.: Set this, if the title is too long to avoid linebreaks in the header of odd pages
+  running_title: none,
   thanks: none,
   abstract: [],
   authors: (),
@@ -70,7 +72,11 @@
 
       if (calc.rem(pagenumer, 2) == 1) {
         align(right)[
-          #title
+          #if running_title != none [
+            #running_title
+          ] else [
+            #title
+          ]
           #h(1cm)
           #counter(page).display()
         ]
