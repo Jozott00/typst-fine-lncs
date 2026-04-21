@@ -142,7 +142,7 @@
 
     if it.func() == figure and it.kind == image {
       supplement = it.supplement
-    } else if it.func() == ref and it.element != none {
+    } else if it.func() == ref and it.element.func() == figure {
       supplement = it.element.supplement
     } else {
       return it
