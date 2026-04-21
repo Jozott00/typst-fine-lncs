@@ -33,6 +33,7 @@
   // The result of a call to the `bibliography` function or `none`.
   bibliography: none,
   page-config: (:),
+  lang: "en",
   body,
 ) = {
   //// CONSTANTS
@@ -42,7 +43,7 @@
 
   // Set the document's basic properties.
   set document(author: authors.map(a => a.name), title: title)
-  set text(font: "New Computer Modern", lang: "en", size: 10pt)
+  set text(font: "New Computer Modern", lang: lang, size: 10pt)
 
 
   //// EVALUATIONS
@@ -134,13 +135,29 @@
   show figure: pad.with(top: 20.5pt, bottom: 22pt)
   show figure: set text(9pt)
   show figure: align.with(left)
+
   // let Figure display as Fig
-  let fig_replace(it) = {
-    show "Figure": "Fig."
+  let supplement_replace(it) = {
+    let supplement
+
+    if it.func() == figure and it.kind == image {
+      supplement = it.supplement
+    } else if it.func() == ref and it.element != none {
+      supplement = it.element.supplement
+    } else {
+      return it
+    }
+    supplement = supplement.text
+
+    if supplement.len() <= 3 {
+      return it
+    }
+
+    show supplement: supplement.slice(0, 3) + "."
     it
   }
-  show figure.where(kind: image): fig_replace
-  show ref: fig_replace
+  show figure.where(kind: image): supplement_replace
+  show ref: supplement_replace
 
   //// TABLE CONFIG
   let table_stroke = 0.5pt
