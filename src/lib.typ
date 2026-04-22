@@ -279,7 +279,7 @@
 
   // Style bibliography.
   show std.bibliography: set text(9pt)
-  set std.bibliography(title: text(12pt)[References], style: "springer-lecture-notes-in-computer-science")
+  set std.bibliography(style: "springer-lecture-notes-in-computer-science")
 
   // Display bibliography.
   bibliography
