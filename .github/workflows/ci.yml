@@ -1,0 +1,53 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  format:
+    name: Format
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: extractions/setup-just@v2
+      - uses: baptiste0928/cargo-install@v3
+        with:
+          crate: typstyle
+      - name: Check formatting
+        run: just fmt-check
+
+  generated:
+    name: Generated tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: extractions/setup-just@v2
+      - name: Check generated tests are in sync
+        run: just gen-tests-check
+
+  test:
+    name: Test
+    needs: generated
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: extractions/setup-just@v2
+      - uses: typst-community/setup-typst@v4
+      - uses: typst-community/setup-tytanic@v1
+        with:
+          tytanic-version: 0.3.3
+      - name: Run tests
+        run: just test
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: artifacts
+          path: |
+            tests/**/diff/*.png
+            tests/**/out/*.png
+            tests/**/ref/*.png
+          retention-days: 5

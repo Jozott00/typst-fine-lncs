@@ -1,4 +1,4 @@
-#import "@preview/fine-lncs:0.4.0": author, institute, lncs, proof, theorem
+#import "../../src/lib.typ": author, institute, lncs, proof, theorem
 
 #let inst_princ = institute(
   "Princeton University",
@@ -36,7 +36,7 @@
     15--250 words.
   ],
   keywords: ("First keyword", "Second keyword", "Another keyword"),
-  bibliography: bibliography("refs.bib"),
+  bibliography: bibliography("../../template/refs.bib"),
   // optional configuration of page (takes all page parameter)
   // page_config: (paper: "a4")
 )
@@ -90,7 +90,7 @@ ever possible, use vector graphics instead (see @image_fig).
 #figure(
   caption: [A figure caption is always placed below the illustration. Please note that short
     captions are centered, while long ones are justified by the macro package automatically.],
-  image("fig1.svg"),
+  image("../../template/fig1.svg"),
 ) <image_fig>
 
 

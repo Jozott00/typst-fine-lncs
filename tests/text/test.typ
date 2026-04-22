@@ -1,4 +1,4 @@
-#import "../../src/lib.typ": lncs, institute, author, theorem, proof
+#import "../../src/lib.typ": author, institute, lncs, proof, theorem
 
 #let test_inst = institute("Test")
 

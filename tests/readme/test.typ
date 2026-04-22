@@ -16,9 +16,10 @@
   email: "{abc,lncs}@uni-heidelberg.de",
 )
 
-
 #show: lncs.with(
   title: "Contribution Title",
+  // Opt.: Set this, if the title is too long to avoid linebreaks in the header of odd pages
+  // running-title: "Short version of contribution title"
   thanks: "Supported by organization x.",
   authors: (
     author("First Author", insts: (inst_princ), oicd: "0000-1111-2222-3333"),
@@ -34,4 +35,9 @@
     15--250 words.
   ],
   keywords: ("First keyword", "Second keyword", "Another keyword"),
+  bibliography: bibliography("../../template/refs.bib"),
 )
+
+= First Section
+
+My awesome paper ...

@@ -45,7 +45,6 @@
   set document(author: authors.map(a => a.name), title: title)
   set text(font: "New Computer Modern", lang: lang, size: 10pt)
 
-
   //// EVALUATIONS
   let author_running = {
     let an = authors.map(it => {
@@ -64,7 +63,12 @@
 
   //// PAGE CONFIG
   set page(paper: "us-letter")
-  set page(margin: (left: 47.5mm, right: 44mm, top: TOP_PAGE_MARING, bottom: 45mm))
+  set page(margin: (
+    left: 47.5mm,
+    right: 44mm,
+    top: TOP_PAGE_MARING,
+    bottom: 45mm,
+  ))
   // set page header
   set page(
     header: context {
@@ -117,18 +121,23 @@
     }
   }
 
-
   //// SUPER CONFIGS
   set super(size: 8pt)
 
   //// FOOTNOTE CONFIGS
   show footnote.entry: set text(9pt)
   show footnote.entry: it => pad(left: 1mm, top: 0mm, it)
-  set footnote.entry(separator: line(start: (10pt, 0pt), length: 57pt, stroke: 0.5pt))
+  set footnote.entry(separator: line(
+    start: (10pt, 0pt),
+    length: 57pt,
+    stroke: 0.5pt,
+  ))
 
   /////  FIGURE CONFIG
   set figure.caption(separator: [. ]) // separator to .
-  show figure.caption: it => align(center)[*#it.supplement #context it.counter.display()#it.separator*#it.body] // bold figure kind
+  show figure.caption: it => align(
+    center,
+  )[*#it.supplement #context it.counter.display()#it.separator*#it.body] // bold figure kind
   show figure.where(kind: table): set figure.caption(position: top) // caption for table above figure
   show figure.where(kind: image): set image(width: 100%)
   set figure(gap: 4.5mm)
@@ -142,7 +151,9 @@
 
     if it.func() == figure and it.kind == image {
       supplement = it.supplement
-    } else if it.func() == ref and it.element != none and it.element.func() == figure {
+    } else if (
+      it.func() == ref and it.element != none and it.element.func() == figure
+    ) {
       supplement = it.element.supplement
     } else {
       return it
@@ -165,7 +176,6 @@
   set table(inset: (x: 0.7mm, y: 0.74mm))
   set table.hline(stroke: table_stroke)
 
-
   //// ---- Start of content -----
 
   v(-9mm)
@@ -187,7 +197,6 @@
   {
     set align(center)
 
-
     let insts = authors.map(it => it.insts).flatten().dedup()
 
     // Author information.
@@ -197,12 +206,17 @@
       .map(it => {
         let a = it.at(1)
         // find references
-        let refs = a.insts.map(ai => str(insts.position(i => i == ai) + 1)).join(",")
+        let refs = a
+          .insts
+          .map(ai => str(insts.position(i => i == ai) + 1))
+          .join(",")
 
         let oicd = if a.oicd != none { [[#a.oicd]] } else { "" }
 
         // add "and" infront of last author
-        let und = if it.at(0) > 0 and it.at(0) == authors.len() - 1 { "and" } else { "" }
+        let und = if it.at(0) > 0 and it.at(0) == authors.len() - 1 {
+          "and"
+        } else { "" }
 
         [#und #a.name#super([#refs#oicd])]
       })
@@ -211,7 +225,6 @@
     if authors.len() == 0 {
       [ No Author Given]
     }
-
 
     v(3.6mm)
 
@@ -227,7 +240,11 @@
           [#inst.name]
           if inst.addr != none [, #inst.addr ]
           linebreak()
-          if inst.email != none [#text(font: "New Computer Modern Mono", size: 9pt, inst.email) \ ]
+          if inst.email != none [#text(
+            font: "New Computer Modern Mono",
+            size: 9pt,
+            inst.email,
+          ) \ ]
           if inst.url != none [#inst.url \ ]
         })
         .join()
@@ -239,7 +256,6 @@
 
     v(10.7mm)
 
-
     // abstract and keywords.
     block(width: 104mm)[
       #set align(left)
@@ -250,7 +266,9 @@
       ]
       #if keywords.len() > 0 {
         v(4.5mm)
-        let display = if type(keywords) == str { keywords } else { keywords.join([ $dot$ ]) }
+        let display = if type(keywords) == str { keywords } else {
+          keywords.join([ $dot$ ])
+        }
         text[*Keywords:* #display]
       }
     ]

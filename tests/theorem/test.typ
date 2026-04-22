@@ -1,4 +1,7 @@
-#import "../../src/lib.typ": author, corollary, definition, example, institute, lemma, lncs, proof, proposition, theorem
+#import "../../src/lib.typ": (
+  author, corollary, definition, example, institute, lemma, lncs, proof,
+  proposition, theorem,
+)
 
 #show: lncs.with(
   title: "Contribution Title",
@@ -10,7 +13,9 @@
 #theorem[Every planar graph can be 4-coloured.]
 #theorem(name: "Cook-Levin")[SAT is NP-complete.]
 #definition[$x+0:=x$ and $x+(y+1)=(x+1)+y$]
-#definition(name: "Transitivity")[$a circle.small b and b circle.small c ==> a circle.small c$]
+#definition(
+  name: "Transitivity",
+)[$a circle.small b and b circle.small c ==> a circle.small c$]
 #corollary[$1+1=2$]
 #corollary(name: "Named")[$1+1=2$]
 #proof[An exercise for the reader.]
