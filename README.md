@@ -113,14 +113,6 @@ just gen-tests
 
 Commit the regenerated files alongside your changes.
 
-### Continuous Integration
-
-Every push to `main` and every pull request runs both the format check and the test suite via GitHub Actions (see [`.github/workflows/ci.yml`](.github/workflows/ci.yml)). To reproduce the CI run locally:
-
-```bash
-just ci
-```
-
 ### Releasing
 
 Publication to the [Typst Universe](https://typst.app/universe) is handled by [`typship`](https://github.com/sjfhsjfh/typship) and is intentionally decoupled from GitHub tagging: the two systems are independent and must be triggered separately.
