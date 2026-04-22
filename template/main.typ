@@ -1,4 +1,4 @@
-#import "@preview/fine-lncs:0.4.0": author, institute, lncs, proof, theorem
+#import "@preview/fine-lncs:0.5.0": author, institute, lncs, proof, theorem
 
 #let inst_princ = institute(
   "Princeton University",
