@@ -17,9 +17,29 @@ fmt:
 fmt-check:
     typstyle --check .
 
+# Regenerate tests/template/test.typ and tests/readme/test.typ
+gen-tests:
+    ./scripts/gen-tests.sh
+
+# Regenerate, then fail if the committed copies drift (CI drift check)
+gen-tests-check:
+    ./scripts/gen-tests.sh --check
+
 # Run the test suite
 test:
     tt run
 
+# Bump the package version across VERSION, typst.toml, template, and README
+bump version:
+    ./scripts/bump-version.sh {{version}}
+
 # Run everything CI runs
-ci: fmt-check test
+ci: fmt-check gen-tests-check test
+
+# Run release pre-flight checks without publishing
+release-check:
+    ./scripts/release.sh --dry-run
+
+# Run release pre-flight checks and publish via typship
+release:
+    ./scripts/release.sh
