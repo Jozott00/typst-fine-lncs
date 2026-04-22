@@ -54,23 +54,60 @@ My awesome paper ...
 
 ### Local Usage
 
-If you want to use this template locally, clone it and use [Typship](https://github.com/sjfhsjfh/typship) to install it using
+If you want to use this template locally, clone it and install it with:
+
+```bash
+just install
 ```
-typship install local
-```
-This allows you to import the template using 
-```
+
+This allows you to import the template using
+
+```typst
 #import "@local/fine-lncs:0.4.0": lncs, institute, author, theorem, proof
 ```
 
 ## Development
 
-To work on this template locally, use [Typship](https://github.com/sjfhsjfh/typship) to simplify development.
-Use `typship dev` to setup a symlink of this library in the local preview package directory.
+Common tasks are wrapped in a [`justfile`](https://github.com/casey/just). Run `just` in the repo root to see all recipes:
 
-For testing, the project uses [tytanic](https://github.com/tingerrr/tytanic).  
-After installing `tytanic`, you can run all tests with:
+```text
+dev       # Symlink this template into the local @preview package dir (typship dev)
+install   # Install this template locally as @local/fine-lncs (typship install local)
+fmt       # Format all .typ files in place
+fmt-check # Check formatting without modifying files (same as CI)
+test      # Run the test suite
+ci        # Run everything CI runs
+```
+
+Required tools:
+
+- [`just`](https://github.com/casey/just) — command runner
+- [`typship`](https://github.com/sjfhsjfh/typship) — local install & dev symlink
+- [`typstyle`](https://github.com/typstyle-rs/typstyle) — formatter (`cargo install typstyle`)
+- [`tytanic`](https://github.com/tingerrr/tytanic) — test runner (`cargo install tytanic`)
+
+Use `just dev` to symlink this library into your local Typst package directory while you're iterating on it.
+
+### Formatting
+
+All `.typ` files are formatted with `typstyle`. CI enforces this via `just fmt-check`, so before pushing run:
 
 ```bash
-tt run
+just fmt
+```
+
+### Testing
+
+The project uses [tytanic](https://github.com/tingerrr/tytanic) for tests. Run the full suite with:
+
+```bash
+just test
+```
+
+### Continuous Integration
+
+Every push to `main` and every pull request runs both the format check and the test suite via GitHub Actions (see [`.github/workflows/ci.yml`](.github/workflows/ci.yml)). To reproduce the CI run locally:
+
+```bash
+just ci
 ```

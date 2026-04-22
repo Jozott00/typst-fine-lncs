@@ -1,0 +1,32 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  format:
+    name: Format
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: extractions/setup-just@v2
+      - uses: baptiste0928/cargo-install@v3
+        with:
+          crate: typstyle
+      - name: Check formatting
+        run: just fmt-check
+
+  test:
+    name: Test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: extractions/setup-just@v2
+      - uses: typst-community/setup-typst@v4
+      - uses: baptiste0928/cargo-install@v3
+        with:
+          crate: tytanic
+      - name: Run tests
+        run: just test

@@ -1,16 +1,19 @@
-#import "@preview/fine-lncs:0.4.0": lncs, institute, author, theorem, proof
+#import "@preview/fine-lncs:0.4.0": author, institute, lncs, proof, theorem
 
-#let inst_princ = institute("Princeton University",
-  addr: "Princeton NJ 08544, USA"
+#let inst_princ = institute(
+  "Princeton University",
+  addr: "Princeton NJ 08544, USA",
 )
-#let inst_springer = institute("Springer Heidelberg",
+#let inst_springer = institute(
+  "Springer Heidelberg",
   addr: "Tiergartenstr. 17, 69121 Heidelberg, Germany",
   email: "lncs@springer.com",
-  url: "http://www.springer.com/gp/computer-science/lncs"
+  url: "http://www.springer.com/gp/computer-science/lncs",
 )
-#let inst_abc = institute("ABC Institute",
+#let inst_abc = institute(
+  "ABC Institute",
   addr: "Rupert-Karls-University Heidelberg, Heidelberg, Germany",
-  email: "{abc,lncs}@uni-heidelberg.de"
+  email: "{abc,lncs}@uni-heidelberg.de",
 )
 
 
@@ -20,18 +23,13 @@
   // running-title: "Short version of contribution title"
   thanks: "Supported by organization x.",
   authors: (
-    author("First Author",
-      insts: (inst_princ),
-      oicd: "0000-1111-2222-3333",
-    ),
-    author("Second Author",
+    author("First Author", insts: (inst_princ), oicd: "0000-1111-2222-3333"),
+    author(
+      "Second Author",
       insts: (inst_springer, inst_abc),
       oicd: "1111-2222-3333-4444",
     ),
-    author("Third Author",
-      insts: (inst_abc),
-      oicd: "2222-3333-4444-5555",
-    ),
+    author("Third Author", insts: (inst_abc), oicd: "2222-3333-4444-5555"),
   ),
   abstract: [
     The abstract should briefly summarize the contents of the paper in
@@ -64,11 +62,21 @@ four levels of headings. @heading_styles gives a summary of all heading levels.
     table.hline(),
     [Heading level], [Example], [Font size and style],
     table.hline(),
-    [Title (centered)], text(14pt, weight: "bold", "Lecture Notes"), [14 point, bold],
-    [1st-level heading], text(12pt, weight: "bold")[Introduction], [12 point, bold],
-    [2nd-level heading], text(10pt, weight: "bold")[Printing Area], [10 point, bold],
-    [3rd-level heading], [#text(10pt, weight: "bold")[Run-in Heading in Bold.] Text follows.], [10 point, bold],
-    [4th-level heading], [#text(10pt, style: "italic")[Lowest Level Heading] Text follows.], [10 point, italic],
+    [Title (centered)],
+    text(14pt, weight: "bold", "Lecture Notes"),
+    [14 point, bold],
+    [1st-level heading],
+    text(12pt, weight: "bold")[Introduction],
+    [12 point, bold],
+    [2nd-level heading],
+    text(10pt, weight: "bold")[Printing Area],
+    [10 point, bold],
+    [3rd-level heading],
+    [#text(10pt, weight: "bold")[Run-in Heading in Bold.] Text follows.],
+    [10 point, bold],
+    [4th-level heading],
+    [#text(10pt, style: "italic")[Lowest Level Heading] Text follows.],
+    [10 point, italic],
     table.hline(),
   )
 ] <heading_styles>
@@ -79,9 +87,10 @@ $ x + y = z $
 Please try to avoid rasterized images for line-art diagrams and schemas. When-
 ever possible, use vector graphics instead (see @image_fig).
 
-#figure(caption: [A figure caption is always placed below the illustration. Please note that short
-captions are centered, while long ones are justified by the macro package automatically.],
-image("fig1.svg")
+#figure(
+  caption: [A figure caption is always placed below the illustration. Please note that short
+    captions are centered, while long ones are justified by the macro package automatically.],
+  image("fig1.svg"),
 ) <image_fig>
 
 
