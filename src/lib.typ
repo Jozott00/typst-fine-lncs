@@ -176,6 +176,10 @@
   set table(inset: (x: 0.7mm, y: 0.74mm))
   set table.hline(stroke: table_stroke)
 
+  //// MATH CONFIG
+  set math.equation(numbering: "(1)")
+  show math.equation.where(block: true): set block(above: 1em, below: 1em)
+
   //// ---- Start of content -----
 
   v(-9mm)
