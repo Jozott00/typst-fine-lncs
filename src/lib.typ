@@ -26,6 +26,7 @@
   title: [Contribution Title],
   // Opt.: Set this, if the title is too long to avoid linebreaks in the header of odd pages
   running-title: none,
+  running-author: none,
   thanks: none,
   abstract: [],
   authors: (),
@@ -89,7 +90,11 @@
         align(left)[
           #counter(page).display()
           #h(1cm)
-          #author_running
+          #if running-author != none [
+            #running-author
+          ] else [
+            #author_running
+          ]
         ]
       }
     },
