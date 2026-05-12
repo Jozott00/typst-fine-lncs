@@ -38,4 +38,4 @@ Testing if the table has the same proportions as the in the Latex template.
   )
 ] <heading_styles>
 
-With spacings before and after.
+With spacings before and after. And a reference @heading_styles.
