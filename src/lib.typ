@@ -39,6 +39,7 @@
 ) = {
   //// CONSTANTS
   let PAR_INDENT = 15pt
+  let PAR_SPACING = 0.4em
   let TOP_PAGE_MARING = 50mm
   let TITLE_SIZE = 14pt
 
@@ -60,7 +61,7 @@
   }
 
   //// PAR CONFIG
-  set par(leading: 0.50em, spacing: 0.4em)
+  set par(leading: 0.50em, spacing: PAR_SPACING)
 
   //// PAGE CONFIG
   set page(paper: "us-letter")
@@ -119,10 +120,10 @@
       it
     } else if it.level == 3 {
       set text(10pt, weight: "bold")
-      [#v(2em)#h(-PAR_INDENT) #it.body]
+      block(below: 0em, height: 2em + PAR_SPACING, spacing: 0em) + it.body
     } else if it.level == 4 {
       set text(10pt, weight: "regular", style: "italic")
-      [#v(1.3em)#h(-PAR_INDENT)#it.body]
+      block(below: 0em, height: 1.3em + PAR_SPACING, spacing: 0em) + it.body
     }
   }
 
