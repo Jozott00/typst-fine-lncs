@@ -119,10 +119,10 @@
       it
     } else if it.level == 3 {
       set text(10pt, weight: "bold")
-      [#v(2em)#h(-PAR_INDENT) #it.body]
+      block(below: 0em, height: 2em + .4em, spacing: 0em) + it.body
     } else if it.level == 4 {
       set text(10pt, weight: "regular", style: "italic")
-      [#v(1.3em)#h(-PAR_INDENT)#it.body]
+      block(below: 0em, height: 1.3em + .4em, spacing: 0em) + it.body
     }
   }
 
