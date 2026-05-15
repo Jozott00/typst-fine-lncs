@@ -1,5 +1,5 @@
 #import "theorem_proof_cnf.typ": *
-#import "styles.typ": __llncs_style_cnf
+#import "styles.typ": *
 
 // all theorem related elements
 #let (
@@ -19,12 +19,6 @@
   __example-rules,
 ) = __llncs_thm_cnf()
 
-#let (
-  page_config_paper_a4,
-  page_config_paper_us,
-  page_config_book,
-) = __llncs_style_cnf
-
 
 // The project function defines how your document looks.
 // It takes your content and some metadata and formats it.
@@ -42,6 +36,8 @@
   keywords: (),
   // The result of a call to the `bibliography` function or `none`.
   bibliography: none,
+  // sets the layout of the paper, "proceedings" for more spacious margins, "book" for tighter spacing
+  paper-style: "proceedings",
   page-config: (:),
   lang: "en",
   body,
@@ -72,7 +68,13 @@
   set par(leading: 0.50em, spacing: PAR_SPACING)
 
   //// PAGE CONFIG
-  set page(..page_config_paper_us)
+  if paper-style == "proceedings" {
+  	set page(..__llncs_style_us_paper)
+  } else if paper-style == "book" {
+  	set page(..__llncs_style_book)
+  } else {
+    panic("unknown paper-style " + paper-style + ". Use \"proceedings\" or \"book\"")
+  }
   // set page header
   set page(
     header: context {

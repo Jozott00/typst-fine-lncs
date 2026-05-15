@@ -25,9 +25,3 @@
     y: 25mm,
   ),
 )
-
-#let __llncs_style_cnf = (
-  page_config_paper_a4: __llncs_style_a4_paper,
-  page_config_paper_us: __llncs_style_us_paper,
-  page_config_book: __llncs_style_book,
-)
