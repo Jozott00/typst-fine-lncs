@@ -69,11 +69,15 @@
 
   //// PAGE CONFIG
   if paper-style == "proceedings" {
-  	set page(..__llncs_style_us_paper)
+    set page(..__llncs_style_us_paper)
   } else if paper-style == "book" {
-  	set page(..__llncs_style_book)
+    set page(..__llncs_style_book)
   } else {
-    panic("unknown paper-style " + paper-style + ". Use \"proceedings\" or \"book\"")
+    panic(
+      "unknown paper-style "
+        + paper-style
+        + ". Use \"proceedings\" or \"book\"",
+    )
   }
   // set page header
   set page(
