@@ -1,4 +1,5 @@
 #import "theorem_proof_cnf.typ": *
+#import "styles.typ": __llncs_style_cnf
 
 // all theorem related elements
 #let (
@@ -18,6 +19,12 @@
   __example-rules,
 ) = __llncs_thm_cnf()
 
+#let (
+  page_config_paper_a4,
+  page_config_paper_us,
+  page_config_book,
+) = __llncs_style_cnf
+
 
 // The project function defines how your document looks.
 // It takes your content and some metadata and formats it.
@@ -30,6 +37,8 @@
   thanks: none,
   abstract: [],
   authors: (),
+  // whether to show the orcid as icon (true) or as text (false)
+  author-orcid-icon: false,
   keywords: (),
   // The result of a call to the `bibliography` function or `none`.
   bibliography: none,
@@ -39,7 +48,7 @@
 ) = {
   //// CONSTANTS
   let PAR_INDENT = 15pt
-  let TOP_PAGE_MARING = 50mm
+  let PAR_SPACING = 0.4em
   let TITLE_SIZE = 14pt
 
   // Set the document's basic properties.
@@ -60,16 +69,10 @@
   }
 
   //// PAR CONFIG
-  set par(leading: 0.50em, spacing: 0.4em)
+  set par(leading: 0.50em, spacing: PAR_SPACING)
 
   //// PAGE CONFIG
-  set page(paper: "us-letter")
-  set page(margin: (
-    left: 47.5mm,
-    right: 44mm,
-    top: TOP_PAGE_MARING,
-    bottom: 45mm,
-  ))
+  set page(..page_config_paper_us)
   // set page header
   set page(
     header: context {
@@ -119,10 +122,10 @@
       it
     } else if it.level == 3 {
       set text(10pt, weight: "bold")
-      [#v(2em)#h(-PAR_INDENT) #it.body]
+      block(below: 0em, height: 2em + PAR_SPACING, spacing: 0em) + it.body
     } else if it.level == 4 {
       set text(10pt, weight: "regular", style: "italic")
-      [#v(1.3em)#h(-PAR_INDENT)#it.body]
+      block(below: 0em, height: 1.3em + PAR_SPACING, spacing: 0em) + it.body
     }
   }
 
@@ -223,14 +226,22 @@
           .map(ai => str(insts.position(i => i == ai) + 1))
           .join(",")
 
-        let oicd = if a.oicd != none { [[#a.oicd]] } else { "" }
+        let oicd = if a.oicd != none {
+          if author-orcid-icon {
+            link(a.oicd, box(
+              height: .8em,
+              inset: (left: .1em, rest: .1pt),
+              image("ORCID-iD_icon-vector.svg"),
+            ))
+          } else { super(link("[" + a.oicd + "]")) }
+        } else { "" }
 
         // add "and" infront of last author
         let und = if it.at(0) > 0 and it.at(0) == authors.len() - 1 {
           "and"
         } else { "" }
 
-        [#und #a.name#super([#refs#oicd])]
+        [#und #a.name#super(refs)#oicd]
       })
       .join(", ")
 
@@ -269,7 +280,7 @@
     v(10.7mm)
 
     // abstract and keywords.
-    block(width: 104mm)[
+    block(inset: (x: 10mm))[
       #set align(left)
       #set par(justify: true)
       #set text(size: 9pt)
