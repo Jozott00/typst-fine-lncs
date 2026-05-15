@@ -31,9 +31,9 @@ four levels of headings.
   placement: auto,
   table(
     columns: 2,
-    [1],[2],
-    [3],[4]
-  )
+    [1], [2],
+    [3], [4],
+  ),
 )
 
 ==== Fourth Level
