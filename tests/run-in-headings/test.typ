@@ -26,5 +26,15 @@ $ p v = R T $
 The contribution should contain no more than
 four levels of headings.
 
+#figure(
+  caption: [A test table],
+  placement: auto,
+  table(
+    columns: 2,
+    [1],[2],
+    [3],[4]
+  )
+)
+
 ==== Fourth Level
 #lorem(20)
