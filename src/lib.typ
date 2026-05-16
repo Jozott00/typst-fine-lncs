@@ -68,10 +68,11 @@
   set par(leading: 0.50em, spacing: PAR_SPACING)
 
   //// PAGE CONFIG
+  let paper-conf
   if paper-style == "proceedings" {
-    set page(..__llncs_style_us_paper)
+    paper-conf = __llncs_style_us_paper
   } else if paper-style == "book" {
-    set page(..__llncs_style_book)
+    paper-conf = __llncs_style_book
   } else {
     panic(
       "unknown paper-style "
@@ -79,6 +80,7 @@
         + ". Use \"proceedings\" or \"book\"",
     )
   }
+  set page(..paper-conf)
   // set page header
   set page(
     header: context {
