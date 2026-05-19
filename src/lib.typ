@@ -51,7 +51,7 @@
   let author_running = {
     let an = authors.map(it => {
       let ns = it.name.split(" ")
-      [#ns.at(0).at(0). #ns.last()]
+      [#ns.at(0).split("-").map(w => w.at(0) + ".").join("-") #ns.last()]
     })
     if an.len() < 2 {
       an.join(", ")

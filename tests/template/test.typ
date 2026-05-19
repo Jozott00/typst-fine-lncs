@@ -24,7 +24,11 @@
   // running-author: "Override the default author shortening",
   thanks: "Supported by organization x.",
   authors: (
-    author("First Author", insts: (inst_princ), oicd: "0000-1111-2222-3333"),
+    author(
+      "First-Name Author",
+      insts: (inst_princ),
+      oicd: "0000-1111-2222-3333",
+    ),
     author(
       "Second Author",
       insts: (inst_springer, inst_abc),
