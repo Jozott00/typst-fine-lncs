@@ -32,6 +32,8 @@
   authors: (),
   keywords: (),
   // The result of a call to the `bibliography` function or `none`.
+  acknowledgments: none,
+  interests: none,
   bibliography: none,
   page-config: (:),
   lang: "en",
@@ -72,6 +74,7 @@
     bottom: 45mm,
   ))
   // set page header
+  set page(header-ascent: 3em, footer-descent: 3em)
   set page(
     header: context {
       let pagenumer = counter(page).get().first()
@@ -132,12 +135,14 @@
 
   //// FOOTNOTE CONFIGS
   show footnote.entry: set text(9pt)
-  show footnote.entry: it => pad(left: 1mm, top: 0mm, it)
-  set footnote.entry(separator: line(
-    start: (10pt, 0pt),
-    length: 57pt,
-    stroke: 0.5pt,
-  ))
+  set footnote.entry(
+    separator: line(
+      start: (0pt, 0pt),
+      length: 57pt,
+      stroke: 0.5pt,
+    ),
+    indent: 1mm,
+  )
 
   /////  FIGURE CONFIG
   set figure.caption(separator: [. ]) // separator to .
@@ -246,6 +251,7 @@
     if authors.len() == 0 {
       [ No Author Given]
     }
+    context counter(footnote).update(authors.len())
 
     v(3.6mm)
 
@@ -313,6 +319,10 @@
 
   // show actual body
   body
+
+  set text(size: 9pt)
+  block(above: 1.5em, [*Acknowledgments.* #acknowledgments])
+  block(above: 1.5em, [*Disclosure of Interests.* #interests])
 
   // Style bibliography.
   show std.bibliography: set text(9pt)
