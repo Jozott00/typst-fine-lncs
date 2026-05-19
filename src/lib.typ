@@ -32,7 +32,7 @@
   authors: (),
   keywords: (),
   // The result of a call to the `bibliography` function or `none`.
-  acknowledgments: none,
+  acknowledgements: none,
   interests: none,
   bibliography: none,
   page-config: (:),
@@ -329,8 +329,8 @@
   body
 
   set text(size: 9pt)
-  if acknowledgments != none {
-    block(above: 1.5em, [*Acknowledgments.* #acknowledgments])
+  if acknowledgements != none {
+    block(above: 1.5em, [*Acknowledgements.* #acknowledgements])
   }
   if interests != none {
     block(above: 1.5em, [*Disclosure of Interests.* #interests])

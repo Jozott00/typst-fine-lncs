@@ -41,7 +41,7 @@
     15--250 words.
   ],
   keywords: ("First keyword", "Second keyword", "Another keyword"),
-  acknowledgments: [
+  acknowledgements: [
     A bold run-in heading in small font size at the end of the paper is used for general acknowledgments #footnote([If EquinOCS, our proceedings submission system, is used, then the disclaimer can be provided directly in the system.]), for example: This study was funded by X (grant number Y).
   ],
   interests: [
