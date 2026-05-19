@@ -25,6 +25,10 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: extractions/setup-just@v2
+      - uses: typst-community/setup-typst@v4
+      - uses: typst-community/setup-tytanic@v1
+        with:
+          tytanic-version: 0.3.3
       - name: Check generated tests are in sync
         run: just gen-tests-check
 
