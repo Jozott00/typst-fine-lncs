@@ -109,8 +109,8 @@
     block(counter(heading).display(it.numbering) + h(4.5mm) + it.body)
   }
   // padding
-  show heading.where(level: 1): pad.with(bottom: 0.45em, top: 0.64em)
-  show heading.where(level: 2): pad.with(bottom: 0.7em)
+  show heading.where(level: 1): set block(above: 2em, below: 1.3em)
+  show heading.where(level: 2): set block(below: 1.3em)
   show heading: it => {
     if it.level == 1 {
       set text(12pt, weight: "bold")
@@ -305,8 +305,6 @@
 
   // show actual body
   body
-
-  v(8pt)
 
   // Style bibliography.
   show std.bibliography: set text(9pt)
