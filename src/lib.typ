@@ -321,8 +321,12 @@
   body
 
   set text(size: 9pt)
-  block(above: 1.5em, [*Acknowledgments.* #acknowledgments])
-  block(above: 1.5em, [*Disclosure of Interests.* #interests])
+  if acknowledgments != none {
+    block(above: 1.5em, [*Acknowledgments.* #acknowledgments])
+  }
+  if interests != none {
+    block(above: 1.5em, [*Disclosure of Interests.* #interests])
+  }
 
   // Style bibliography.
   show std.bibliography: set text(9pt)
