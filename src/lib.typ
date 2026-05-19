@@ -146,10 +146,18 @@
   )[*#it.supplement #context it.counter.display()#it.separator*#it.body] // bold figure kind
   show figure.where(kind: table): set figure.caption(position: top) // caption for table above figure
   show figure.where(kind: image): set image(width: 100%)
-  set figure(gap: 4.5mm)
-  show figure: pad.with(top: 20.5pt, bottom: 22pt)
   show figure: set text(9pt)
-  show figure: align.with(left)
+  show figure: set align(left)
+  set figure(gap: 4.5mm, placement: none)
+  show figure: it => {
+    if it.kind == "llncs-example-group" or it.kind == "llncs-thm-group" or it.kind == "llncs-def-group" or it.kind == "llncs-corol-group" or it.kind == "llncs-proof-group" or it.kind == "llncs-lemma-group" or it.kind == "llncs-prop-group" {
+      set block(above: auto, below: auto)
+      return it
+    }
+
+    set block(above: 3em, below: 3em)
+    it
+  }
 
   // let Figure display as Fig
   let supplement_replace(it) = {
