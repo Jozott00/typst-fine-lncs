@@ -155,7 +155,15 @@
   show figure: set align(left)
   set figure(gap: 4.5mm, placement: none)
   show figure: it => {
-    if it.kind == "llncs-example-group" or it.kind == "llncs-thm-group" or it.kind == "llncs-def-group" or it.kind == "llncs-corol-group" or it.kind == "llncs-proof-group" or it.kind == "llncs-lemma-group" or it.kind == "llncs-prop-group" {
+    if (
+      it.kind == "llncs-example-group"
+        or it.kind == "llncs-thm-group"
+        or it.kind == "llncs-def-group"
+        or it.kind == "llncs-corol-group"
+        or it.kind == "llncs-proof-group"
+        or it.kind == "llncs-lemma-group"
+        or it.kind == "llncs-prop-group"
+    ) {
       set block(above: auto, below: auto)
       return it
     }
