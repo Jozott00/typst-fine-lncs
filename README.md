@@ -106,7 +106,7 @@ The project uses [tytanic](https://github.com/tingerrr/tytanic) for tests. Run t
 just test
 ```
 
-Two tests (`tests/template/` and `tests/readme/`) are generated automatically from `template/main.typ` and the `README.md` usage example respectively. They compile against the local `src/lib.typ` instead of the published `@preview` version, so CI catches API breakage before a release. After changing the template or the README example, regenerate them:
+Two tests (`tests/template/` and `tests/readme/`) are generated automatically from `template/main.typ` and the `README.md` usage example respectively. They compile against the local `src/lib.typ` instead of the published `@preview` version, and `just gen-tests` also refreshes their committed `ref/` snapshots so CI catches both API and rendering regressions before a release. After changing the template or the README example, regenerate them:
 
 ```bash
 just gen-tests

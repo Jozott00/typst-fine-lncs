@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 #
-# Regenerate test files that pin the template and the README example to
-# the current in-work library (src/lib.typ) instead of the published
-# @preview/fine-lncs version. The generated files are committed; pass
-# --check to fail the script if regeneration produced any drift against
-# the committed copy (used by CI).
+# Regenerate test fixtures that pin the template and the README example
+# to the current in-work library (src/lib.typ) instead of the published
+# @preview/fine-lncs version. The generated files and their references
+# are committed; pass --check to fail the script if regeneration
+# produced any drift against the committed copy (used by CI).
 
 set -euo pipefail
 
@@ -63,12 +63,23 @@ echo "regenerated:"
 echo "  tests/template/test.typ"
 echo "  tests/readme/test.typ"
 
+# Refresh the committed references for the generated tests so they act
+# as snapshot tests instead of compile-only checks.
+rm -rf tests/template/ref tests/readme/ref
+mkdir -p tests/template/ref tests/readme/ref
+tt update --force template readme >/dev/null
+
+echo "  tests/template/ref/"
+echo "  tests/readme/ref/"
+
 if (( CHECK )); then
-  out=$(git status --porcelain -- tests/template/test.typ tests/readme/test.typ)
+  out=$(git status --porcelain -- \
+    tests/template/test.typ tests/template/ref \
+    tests/readme/test.typ tests/readme/ref)
   if [[ -n $out ]]; then
     echo "drift: generated tests are out of sync. Run 'just gen-tests' and commit." >&2
     echo "$out" >&2
-    git diff -- tests/template/test.typ tests/readme/test.typ >&2 || true
+    git diff -- tests/template/test.typ tests/template/ref tests/readme/test.typ tests/readme/ref >&2 || true
     exit 1
   fi
   echo "generated tests are up to date"
