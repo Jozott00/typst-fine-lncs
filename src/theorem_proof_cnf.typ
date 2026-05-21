@@ -56,37 +56,37 @@
 
 #let __llncs_thm_cnf() = {
   let thm = default-theorems(
-    "llcns-thm-group",
+    "llncs-thm-group",
     lang: "en",
     ..__llncs-thm-styling,
   )
   let def = default-theorems(
-    "llcns-def-group",
+    "llncs-def-group",
     lang: "en",
     ..__llncs-thm-styling,
   )
   let prop = default-theorems(
-    "llcns-prop-group",
+    "llncs-prop-group",
     lang: "en",
     ..__llncs-thm-styling,
   )
   let lem = default-theorems(
-    "llcns-lemma-group",
+    "llncs-lemma-group",
     lang: "en",
     ..__llncs-thm-styling,
   )
   let proof = default-theorems(
-    "llcns-proof-group",
+    "llncs-proof-group",
     lang: "en",
     ..__llncs-thm-styling,
   )
   let corol = default-theorems(
-    "llcns-corol-group",
+    "llncs-corol-group",
     lang: "en",
     ..__llncs-thm-styling,
   )
   let example = new-theorems(
-    "llcns-example-group",
+    "llncs-example-group",
     ("example": "Example"),
     thm-numbering: __llncs-thm-numbering,
     thm-styling: __llncs_thm_style,

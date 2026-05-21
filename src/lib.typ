@@ -32,6 +32,8 @@
   authors: (),
   keywords: (),
   // The result of a call to the `bibliography` function or `none`.
+  acknowledgements: none,
+  interests: none,
   bibliography: none,
   page-config: (:),
   lang: "en",
@@ -72,6 +74,7 @@
     bottom: 45mm,
   ))
   // set page header
+  set page(header-ascent: 3em, footer-descent: 3em)
   set page(
     header: context {
       let pagenumer = counter(page).get().first()
@@ -109,8 +112,8 @@
     block(counter(heading).display(it.numbering) + h(4.5mm) + it.body)
   }
   // padding
-  show heading.where(level: 1): pad.with(bottom: 0.45em, top: 0.64em)
-  show heading.where(level: 2): pad.with(bottom: 0.7em)
+  show heading.where(level: 1): set block(above: 2em, below: 1.3em)
+  show heading.where(level: 2): set block(below: 1.3em)
   show heading: it => {
     if it.level == 1 {
       set text(12pt, weight: "bold")
@@ -132,12 +135,14 @@
 
   //// FOOTNOTE CONFIGS
   show footnote.entry: set text(9pt)
-  show footnote.entry: it => pad(left: 1mm, top: 0mm, it)
-  set footnote.entry(separator: line(
-    start: (10pt, 0pt),
-    length: 57pt,
-    stroke: 0.5pt,
-  ))
+  set footnote.entry(
+    separator: line(
+      start: (0pt, 0pt),
+      length: 57pt,
+      stroke: 0.5pt,
+    ),
+    indent: 1mm,
+  )
 
   /////  FIGURE CONFIG
   set figure.caption(separator: [. ]) // separator to .
@@ -146,10 +151,26 @@
   )[*#it.supplement #context it.counter.display()#it.separator*#it.body] // bold figure kind
   show figure.where(kind: table): set figure.caption(position: top) // caption for table above figure
   show figure.where(kind: image): set image(width: 100%)
-  set figure(gap: 4.5mm)
-  show figure: pad.with(top: 20.5pt, bottom: 22pt)
   show figure: set text(9pt)
-  show figure: align.with(left)
+  show figure: set align(left)
+  set figure(gap: 4.5mm, placement: none)
+  show figure: it => {
+    if (
+      it.kind == "llncs-example-group"
+        or it.kind == "llncs-thm-group"
+        or it.kind == "llncs-def-group"
+        or it.kind == "llncs-corol-group"
+        or it.kind == "llncs-proof-group"
+        or it.kind == "llncs-lemma-group"
+        or it.kind == "llncs-prop-group"
+    ) {
+      set block(above: auto, below: auto)
+      return it
+    }
+
+    set block(above: 3em, below: 3em)
+    it
+  }
 
   // let Figure display as Fig
   let supplement_replace(it) = {
@@ -238,6 +259,7 @@
     if authors.len() == 0 {
       [ No Author Given]
     }
+    context counter(footnote).update(authors.len())
 
     v(3.6mm)
 
@@ -306,7 +328,13 @@
   // show actual body
   body
 
-  v(8pt)
+  set text(size: 9pt)
+  if acknowledgements != none {
+    block(above: 1.5em, [*Acknowledgements.* #acknowledgements])
+  }
+  if interests != none {
+    block(above: 1.5em, [*Disclosure of Interests.* #interests])
+  }
 
   // Style bibliography.
   show std.bibliography: set text(9pt)
