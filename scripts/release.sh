@@ -5,7 +5,7 @@
 # VERSION is the source of truth. This script verifies that every other
 # version reference in the repo matches VERSION, that VERSION is a bump
 # over the most recent git tag, and that CI passes — then hands off to
-# `typship publish universe`.
+# `utpm prj publish`.
 #
 # Pass --dry-run to run the checks without publishing.
 
@@ -27,6 +27,18 @@ fail() {
 info() {
   echo "release: $*"
 }
+
+# --- Load optional local environment ------------------------------------
+#
+# Allows release credentials such as UTPM_GITHUB_TOKEN to live in a
+# repo-local .env file without hardcoding them in the script.
+
+if [[ -f .env ]]; then
+  set -a
+  # shellcheck disable=SC1091
+  source .env
+  set +a
+fi
 
 # --- Load VERSION --------------------------------------------------------
 
@@ -108,5 +120,14 @@ if (( DRY_RUN )); then
   exit 0
 fi
 
-info "all pre-flight checks passed — publishing $version via typship"
-typship publish universe
+command -v utpm >/dev/null 2>&1 \
+  || fail "utpm is not installed or not on PATH"
+
+utpm prj publish --help >/dev/null 2>&1 \
+  || fail "installed utpm does not support 'prj publish'"
+
+[[ -n ${UTPM_GITHUB_TOKEN:-} ]] \
+  || fail "UTPM_GITHUB_TOKEN is not set"
+
+info "all pre-flight checks passed — publishing $version via utpm"
+utpm prj publish . --bypass-warning

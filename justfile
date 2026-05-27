@@ -1,13 +1,13 @@
 default:
     @just --list
 
-# Symlink this template into the local @preview package dir (typship dev)
+# Symlink this template into the local @preview package dir (utpm project link preview --no-copy)
 dev:
-    typship dev
+    utpm prj link preview --no-copy
 
-# Install this template locally as @local/fine-lncs (typship install local)
+# Install this template locally as @local/fine-lncs (utpm project link local)
 install:
-    typship install local
+    utpm prj link local
 
 # Format all .typ files in place
 fmt:
@@ -40,6 +40,6 @@ ci: fmt-check gen-tests-check test
 release-check:
     ./scripts/release.sh --dry-run
 
-# Run release pre-flight checks and publish via typship
+# Run release pre-flight checks and publish via utpm
 release:
     ./scripts/release.sh

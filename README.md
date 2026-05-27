@@ -84,11 +84,11 @@ ci               # Run everything CI runs
 Required tools:
 
 - [`just`](https://github.com/casey/just) — command runner
-- [`typship`](https://github.com/sjfhsjfh/typship) — local install & dev symlink
+- [`utpm`](https://github.com/typst-community/utpm) — local package management and Universe publication
 - [`typstyle`](https://github.com/typstyle-rs/typstyle) — formatter (`cargo install typstyle`)
 - [`tytanic`](https://github.com/tingerrr/tytanic) — test runner (`cargo install tytanic`)
 
-Use `just dev` to symlink this library into your local Typst package directory while you're iterating on it.
+Use `just dev` to symlink this library into your local `@preview` Typst package directory while you're iterating on it. Use `just install` to copy it into `@local`.
 
 ### Formatting
 
@@ -116,7 +116,7 @@ Commit the regenerated files alongside your changes.
 
 ### Releasing
 
-Publication to the [Typst Universe](https://typst.app/universe) is handled by [`typship`](https://github.com/sjfhsjfh/typship) and is intentionally decoupled from GitHub tagging: the two systems are independent and must be triggered separately.
+Publication to the [Typst Universe](https://typst.app/universe) is handled by [`utpm`](https://github.com/typst-community/utpm) and is intentionally decoupled from GitHub tagging: the two systems are independent and must be triggered separately.
 
 The [`VERSION`](VERSION) file at the repo root is the single source of truth for the package version. Every other version reference (in `typst.toml`, `template/main.typ`, and the `README.md` import examples) must match it — the release script enforces this.
 
@@ -133,12 +133,14 @@ Release flow:
 
    This verifies: `VERSION` parses as semver, it's greater than the most recent `v*` git tag, every in-repo reference matches it, the working tree is clean, the current branch is `main`, and `just ci` passes.
 
-5. When all checks pass, publish:
+5. Make sure `UTPM_GITHUB_TOKEN` is set in your shell. `utpm prj publish` currently requires it.
+   A repo-local `.env` file also works; `scripts/release.sh` loads it automatically.
+6. When all checks pass, publish:
 
    ```bash
    just release
    ```
 
-   Runs the same checks and, on success, invokes `typship publish universe`.
+   Runs the same checks and, on success, invokes `utpm prj publish . --bypass-warning`.
 
 Tagging the release on GitHub is a separate manual step and isn't performed by this script.
