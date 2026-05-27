@@ -124,23 +124,34 @@ Release flow:
 
 1. Bump the version with `just bump <new-version>`. This updates `VERSION`, `typst.toml`, `template/main.typ`, and the `README.md` import examples atomically.
 2. Regenerate the derived tests: `just gen-tests`.
-3. Commit both the bump and the regenerated tests, then open a PR / merge to `main`.
-4. From a clean `main`, dry-run the release pre-flight:
+3. Create a release branch named `release/X.Y.Z`, where `X.Y.Z` matches `VERSION`. For example, `0.6.4` releases from `release/0.6.4`.
+4. Commit both the bump and the regenerated tests on that release branch.
+5. From a clean `release/X.Y.Z`, dry-run the release pre-flight:
 
    ```bash
    just release-check
    ```
 
-   This verifies: `VERSION` parses as semver, it's greater than the most recent `v*` git tag, every in-repo reference matches it, the working tree is clean, the current branch is `main`, and `just ci` passes.
+   This verifies: `VERSION` parses as semver, it's greater than the most recent `v*` git tag, every in-repo reference matches it, the working tree is clean, the current branch is the matching `release/X.Y.Z` branch, and `just ci` passes.
 
-5. Make sure `UTPM_GITHUB_TOKEN` is set in your shell. `utpm prj publish` currently requires it.
+6. Make sure `UTPM_GITHUB_TOKEN` is set in your shell. `utpm prj publish` currently requires it.
    A repo-local `.env` file also works; `scripts/release.sh` loads it automatically.
-6. When all checks pass, publish:
+7. When all checks pass, publish:
 
    ```bash
    just release
    ```
 
-   Runs the same checks and, on success, invokes `utpm prj publish . --bypass-warning`.
+   Runs the same checks and, on success, bootstraps `utpm`'s local
+   `git-packages` checkout if needed, archives any previous checkout
+   instead of resetting and searching through it, recreates a sparse
+   checkout rooted at this package's `packages/preview/<name>` path,
+   ensures a writable `https://github.com/<you>/packages.git` fork is
+   available as the push remote, syncs fork `main` back to upstream
+   `main` when an older publish left the fork branch diverged, runs
+   `utpm prj publish -p` so `utpm` only prepares and pushes the package
+   update, and finally creates or reuses the GitHub pull request itself.
+   This works around current `utpm 0.3.0` publish failures around both
+   stale `git-packages/` state and its broken post-push GitHub API step.
 
 Tagging the release on GitHub is a separate manual step and isn't performed by this script.
