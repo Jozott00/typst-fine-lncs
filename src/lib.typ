@@ -51,6 +51,7 @@
 
   //// EVALUATIONS
   let author_running = {
+    // LNCS running headers use abbreviated given names plus the last name.
     let an = authors.map(it => {
       let ns = it.name.split(" ")
       [#ns.at(0).split("-").map(w => w.at(0) + ".").join("-") #ns.last()]
@@ -109,11 +110,13 @@
   //// HEADING CONFIGS
   set heading(numbering: "1.1")
   show heading: it => if it.numbering == none { it } else {
+    // Typst's built-in heading numbering gap is not close enough to LNCS, so
+    // we compose the counter and title manually to control the horizontal space.
     block(counter(heading).display(it.numbering) + h(4.5mm) + it.body)
   }
   // padding
-  show heading.where(level: 1): set block(above: 2em, below: 1.3em)
-  show heading.where(level: 2): set block(below: 1.3em)
+  show heading.where(level: 1): set block(above: 18pt, below: 16pt)
+  show heading.where(level: 2): set block(above: 18pt, below: 8pt)
   show heading: it => {
     if it.level == 1 {
       set text(12pt, weight: "bold")
@@ -164,6 +167,8 @@
         or it.kind == "llncs-lemma-group"
         or it.kind == "llncs-prop-group"
     ) {
+      // Theorem-like environments bring their own vertical rhythm from the
+      // lemmify styling, so generic figure spacing would double-apply here.
       set block(above: auto, below: auto)
       return it
     }
@@ -194,6 +199,8 @@
       return it
     }
 
+    // LNCS uses the abbreviated "Fig." form consistently in both captions and
+    // references, so rewrite only image supplements and leave other figures alone.
     show supplement: supplement.slice(0, 3) + "."
     it
   }
@@ -212,6 +219,9 @@
 
   //// ---- Start of content -----
 
+  // The title stack is visually anchored higher on the first page in LNCS than
+  // Typst's default page top would place it, so the whole front matter starts
+  // with a compensating negative offset.
   v(-9mm)
 
   // Title row.
@@ -225,7 +235,7 @@
     ]
   ]
 
-  v(8.5mm)
+  v(8mm)
 
   // encapsulated styling
   {
@@ -261,7 +271,7 @@
     }
     context counter(footnote).update(authors.len())
 
-    v(3.6mm)
+    v(3.5mm)
 
     {
       // Institute information.
@@ -289,27 +299,38 @@
       }
     }
 
-    v(10.7mm)
+    let has-abstract = abstract != []
+    let has-keywords = keywords.len() > 0
 
-    // abstract and keywords.
-    block(width: 104mm)[
-      #set align(left)
-      #set par(justify: true)
-      #set text(size: 9pt)
-      #if abstract != [] [
-        *Abstract.* #abstract
-      ]
-      #if keywords.len() > 0 {
-        v(4.5mm)
-        let display = if type(keywords) == str { keywords } else {
-          keywords.join([ $dot$ ])
+    if has-abstract or has-keywords {
+      // Reserve the LNCS abstract area only when it is actually used; otherwise
+      // the first section would start too far below the author/institute block.
+      v(10.7mm)
+
+      // abstract and keywords.
+      block(width: 104mm)[
+        #set align(left)
+        #set par(justify: true)
+        #set text(size: 9pt)
+        #if has-abstract [
+          *Abstract.* #abstract
+        ]
+        #if has-keywords {
+          if has-abstract {
+            v(4.5mm)
+          }
+          let display = if type(keywords) == str { keywords } else {
+            keywords.join([ $dot$ ])
+          }
+          text[*Keywords:* #display]
         }
-        text[*Keywords:* #display]
-      }
-    ]
+      ]
+    }
   }
 
-  v(1mm)
+  // This gap separates the title/front-matter stack from the body and was tuned
+  // against the LNCS title page layout rather than Typst defaults.
+  v(18pt)
 
   // Main body.
 
