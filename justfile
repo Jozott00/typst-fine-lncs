@@ -25,6 +25,10 @@ gen-tests:
 gen-tests-check:
     ./scripts/gen-tests.sh --check
 
+# Convert a LaTeX-produced PDF into tytanic ref snapshots named 1.png, 2.png, ...
+pdf-to-ref pdf out_dir ppi="144":
+    ./scripts/convert-ref-pdf.sh {{pdf}} {{out_dir}} {{ppi}}
+
 # Run the test suite
 test:
     tt run

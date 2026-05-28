@@ -76,6 +76,7 @@ fmt              # Format all .typ files in place
 fmt-check        # Check formatting without modifying files (same as CI)
 gen-tests        # Regenerate tests/template/ and tests/readme/ from source
 gen-tests-check  # Regenerate, then fail if the committed copies drift (CI)
+pdf-to-ref       # Convert a LaTeX PDF into ref/1.png, ref/2.png, ...
 test             # Run the test suite
 bump <version>   # Bump the package version across all files
 ci               # Run everything CI runs
@@ -113,6 +114,14 @@ just gen-tests
 ```
 
 Commit the regenerated files alongside your changes.
+
+If you want to compare Typst output against the official LNCS LaTeX template, first render the LaTeX source to PDF and then convert that PDF into tytanic-compatible reference snapshots:
+
+```bash
+just pdf-to-ref latex-srcs/samplepaper.pdf tests/some-test/ref
+```
+
+This exports the PDF at `144` ppi, producing `tests/some-test/ref/1.png`, `2.png`, and so on. Pass a third argument to override the pixel density if needed.
 
 ### Releasing
 
