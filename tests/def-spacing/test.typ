@@ -29,3 +29,9 @@ Another paragraph.
 ]
 
 Another paragraph.
+
+#proof[
+    This is a proof.
+]
+
+Another paragraph.
