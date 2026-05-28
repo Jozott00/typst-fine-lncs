@@ -17,25 +17,25 @@
   body,
 ) = [
   #block(width: 100%, breakable: true)[#{
-  set align(left)
-  v(9pt)
-  let (title-style, body-style) = if str(thm-type) == "Example" {
-    (title-style: emph, body-style: it => it)
-  } else {
-    (title-style: strong, body-style: emph)
-  }
-  title-style({
-    thm-type + " "
-    if number != none {
-      number
+    set align(left)
+    v(9pt)
+    let (title-style, body-style) = if str(thm-type) == "Example" {
+      (title-style: emph, body-style: it => it)
+    } else {
+      (title-style: strong, body-style: emph)
     }
-    if name != none {
-      [ (#name)]
-    }
-    [. ]
-  })
-  body-style(body)
-  v(9pt)
+    title-style({
+      thm-type + " "
+      if number != none {
+        number
+      }
+      if name != none {
+        [ (#name)]
+      }
+      [. ]
+    })
+    body-style(body)
+    v(9pt)
   }]
   #__llncs_after_block_par_indent()
 ]
@@ -47,11 +47,11 @@
   body,
 ) = [
   #block(width: 100%, breakable: true)[#{
-  set align(left)
-  v(9pt)
-  emph(thm-type) + ". "
-  body
-  v(9pt)
+    set align(left)
+    v(9pt)
+    emph(thm-type) + ". "
+    body
+    v(9pt)
   }]
   #__llncs_after_block_par_indent()
 ]

@@ -1,4 +1,4 @@
-#import "../../src/lib.typ": author, institute, lncs, proof, theorem, definition
+#import "../../src/lib.typ": author, definition, institute, lncs, proof, theorem
 
 #let test_inst = institute("Test")
 
@@ -13,25 +13,25 @@ First Paragraph.
 This is a new paragraph.
 
 #definition[
-    A definition that explains the meaning of a term.
+  A definition that explains the meaning of a term.
 ]
 
 #definition[
-    A definition that explains the meaning of a term.
+  A definition that explains the meaning of a term.
 ]
 
 Another paragraph.
 
 #theorem[
-    This is a sample theorem. The run-in heading is set in bold, while the
-    following text appears in italics. Definitions, lemmas, propositions, and
-    corollaries are styled the same way.
+  This is a sample theorem. The run-in heading is set in bold, while the
+  following text appears in italics. Definitions, lemmas, propositions, and
+  corollaries are styled the same way.
 ]
 
 Another paragraph.
 
 #proof[
-    This is a proof.
+  This is a proof.
 ]
 
 Another paragraph.
