@@ -27,20 +27,61 @@ if ! command -v magick >/dev/null 2>&1; then
   exit 1
 fi
 
+if ! command -v gs >/dev/null 2>&1; then
+  echo "error: Ghostscript 'gs' command not found" >&2
+  exit 1
+fi
+
 repo=$(git rev-parse --show-toplevel)
 cd "$repo"
 
 mkdir -p "$output_dir"
 
 # Avoid stale snapshots if a new PDF has fewer pages than the old refs.
-find "$output_dir" -maxdepth 1 -type f -regex '.*/[0-9]+\.png' -delete
+shopt -s nullglob
+stale_refs=("$output_dir"/[0-9]*.png)
+shopt -u nullglob
+if (( ${#stale_refs[@]} > 0 )); then
+  rm -f "${stale_refs[@]}"
+fi
 
 tmp_dir=$(mktemp -d "${TMPDIR:-/tmp}/fine-lncs-ref.XXXXXX")
 trap 'rm -rf "$tmp_dir"' EXIT
 
-magick -density "$ppi" "$input_pdf" \
-  -background white -alpha remove -alpha off \
-  "$tmp_dir/page-%d.png"
+page_size=$(magick identify "$input_pdf[0]" 2>/dev/null | awk '{
+  for (i = 1; i <= NF; ++i) {
+    if ($i ~ /^[0-9]+x[0-9]+$/) {
+      print $i
+      exit
+    }
+  }
+}')
+
+paper_size=
+case "$page_size" in
+  612x792)
+    paper_size=letter
+    ;;
+  595x842|596x842)
+    paper_size=a4
+    ;;
+esac
+
+gs_args=(
+  -dSAFER
+  -dBATCH
+  -dNOPAUSE
+  -dPDFFitPage
+  -sDEVICE=pnggray
+  -r"$ppi"
+  -sOutputFile="$tmp_dir/page-%d.png"
+)
+
+if [[ -n $paper_size ]]; then
+  gs_args+=(-sPAPERSIZE="$paper_size" -dFIXEDMEDIA)
+fi
+
+gs "${gs_args[@]}" "$input_pdf"
 
 shopt -s nullglob
 pages=("$tmp_dir"/page-*.png)
@@ -51,12 +92,10 @@ if (( ${#pages[@]} == 0 )); then
   exit 1
 fi
 
+target=1
 for page in "${pages[@]}"; do
-  base=${page##*/}
-  index=${base#page-}
-  index=${index%.png}
-  target=$((index + 1))
   mv "$page" "$output_dir/$target.png"
+  target=$((target + 1))
 done
 
 echo "converted ${#pages[@]} page(s) from $input_pdf into $output_dir at ${ppi} ppi"
