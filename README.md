@@ -5,7 +5,7 @@
 ## Usage
 
 ```typst
-#import "@preview/fine-lncs:0.6.4": author, institute, lncs, proof, theorem
+#import "@preview/fine-lncs:0.6.5": author, institute, lncs, proof, theorem
 
 #let inst_princ = institute(
   "Princeton University",
@@ -62,7 +62,7 @@ just install
 This allows you to import the template using
 
 ```typst
-#import "@local/fine-lncs:0.6.4": lncs, institute, author, theorem, proof
+#import "@local/fine-lncs:0.6.5": lncs, institute, author, theorem, proof
 ```
 
 ## Development
