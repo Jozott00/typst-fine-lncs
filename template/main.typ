@@ -50,7 +50,7 @@
   ],
   bibliography: bibliography("refs.bib"),
   // optional configuration of page (takes all page parameter)
-  // page_config: (paper: "a4")
+  // page-config: (paper: "a4")
 )
 
 = First Section
